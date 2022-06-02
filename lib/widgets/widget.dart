@@ -1,4 +1,6 @@
+// import 'dart:html';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:weather_icons/weather_icons.dart';
 import '../models/weather.dart';
 import '../utils/setBackground.dart';
@@ -6,7 +8,7 @@ import '../utils/setBackground.dart';
 BoxDecoration background() {
   return BoxDecoration(
     image: DecorationImage(
-      image: AssetImage(setbackground("Clear")),
+      image: AssetImage(setbackground("Thunderstorm")), 
       fit: BoxFit.cover,
     ),
   );
@@ -14,7 +16,7 @@ BoxDecoration background() {
 
 Padding city(WeatherData? data) {
   return Padding(
-    padding: const EdgeInsets.only(top: 60, bottom: 20),
+    padding: const EdgeInsets.only(top: 90, bottom: 20),
     child: Text(
       "${data!.name}",
       style: const TextStyle(
@@ -95,17 +97,17 @@ return <Widget>[
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
-                padding: EdgeInsets.only(bottom: 10),
+                padding: const EdgeInsets.only(bottom: 10),
                 child: Icon(
                   getIcon(data!.weather![0].main.toString()),
                   size: 20,
-                  color: Colors.orange,
+                  color: getColor(data.weather![0].main.toString())
                 ),
               ),
                 Padding(
-                  padding: EdgeInsets.only(left: 5),
+                  padding: const EdgeInsets.only(left: 5),
                   child: Text(
-                    "${data.weather![0].main.toString()}",
+                    "${data.weather![0].main}",
                       style: const TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
@@ -149,7 +151,60 @@ List<Widget> rightside(WeatherData? data){
   ];
 }
 
+Padding nextday(WeatherData? data, int nextDay) {
+  String day = DateFormat('EEEE').format(DateTime.now().add(Duration(days: nextDay)));
+  String date = DateFormat('d MMM yyyy').format(DateTime.now().add(Duration(days: nextDay)));
+  return Padding(
+    padding: const EdgeInsets.only(top : 15),
+    child : SizedBox(
+      width: 300,
+      height: 50,
+        child : Container(
+                decoration : BoxDecoration(
+                color: Color.fromARGB(202, 54, 165, 235),
+                borderRadius: BorderRadius.circular(15),
+              ),
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(left: 10),
+                      child : Text(
+                      "$day , $date",
+                      style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
+                    ),
+                  ),
+
+                    const Spacer(),
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 6),
+                      child : Icon( 
+                      getIcon(""),
+                      size: 20,
+                      color: getColor("")
+                    ),),
+                    const Spacer(),
+                    Padding(
+                      padding: EdgeInsets.only(right : 10),
+                      child : Text(
+                        "11,52°",
+                        style: const TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                    ),
+                    )
+                  ],
+        )
+        ),
+              ),  
+  );
+}
+
 IconData getIcon(String weather){
+  
   switch(weather){
     case "Clear":
       return WeatherIcons.day_sunny;
@@ -163,5 +218,22 @@ IconData getIcon(String weather){
       return WeatherIcons.thunderstorm;
     default:
       return WeatherIcons.day_sunny;
+  }
+}
+
+Color getColor(String weather){
+  switch(weather){
+    case "Clear":
+      return Colors.orange;
+    case "Clouds":
+      return Colors.blue;
+    case "Rain":
+      return Colors.blue;
+    case "Snow":
+      return Colors.blue;
+    case "Thunderstorm":
+      return Colors.yellow;
+    default:
+      return Colors.orange;
   }
 }
