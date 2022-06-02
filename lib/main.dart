@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, unnecessary_const
 
 import 'dart:convert';
+import 'package:app/widgets/widget.dart';
 import 'package:flutter/material.dart';
 import './models/weather.dart';
 import 'api/api.dart';
@@ -48,7 +49,6 @@ class _MyHomePageState extends State<MyHomePage> {
             fit: BoxFit.cover,
           ),
         ),
-
         child: Center(
           child: FutureBuilder<WeatherData>(
             future: fetchWeatherData('Paris'),
@@ -56,13 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
               if (snapshot.hasData) {
                 return Column(
                   children: [
-                    const Padding(
-                      padding: EdgeInsets.only(top: 40, bottom: 20),
-                      child: Text(
-                        "Paris",
-                        style: TextStyle(fontSize: 30, color: Colors.white),
-                      ),
-                    ),
+                    city(cityName: snapshot.data!.name.toString()),
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
