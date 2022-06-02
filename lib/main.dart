@@ -70,22 +70,49 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        //temperature
                         Text(
-                          "20°C",
-                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                          "Monday",
+                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
                         ),
-                        //icone
-                        const Icon(
-                          WeatherIcons.cloud,
-                          size: 20,
-                          color: Colors.white,
-                        ),
-                        //description
                         Text(
+                          "Feb 2 2022",
+                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
+                        ),
+                        Text(
+                          "19:22",
+                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
+                        ),
+                        SizedBox(
+                          width: 120,
+                          height: 60,
+                          child : Padding(
+                            padding: const EdgeInsets.only(top: 15, left: 10),
+                            child: Container(
+                              decoration: BoxDecoration(
+                              border: Border.all(color: Colors.white, width: 2),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                          child : Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(bottom : 10),
+                              child : Icon(
+                                WeatherIcons.cloud,
+                                size: 20,
+                              color: Colors.white,
+                              ),
+                            ),
+                            Padding(padding: EdgeInsets.only(left : 5),
+                            child : Text(
                           "Clear",
-                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                          style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.white),
                         ),
+                            ),
+                        ],)
+                          ),
+                          ),
+                          ),
                       ],
                     ),
                   ),
@@ -98,7 +125,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               ]
             )
-          ],)
+          ,)
       ),
     );
   }
