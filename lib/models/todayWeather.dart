@@ -1,4 +1,4 @@
-class WeatherData {
+class TodayWeatherData {
   Coord? _coord;
   List<Weather>? _weather;
   String? _base;
@@ -13,7 +13,7 @@ class WeatherData {
   String? _name;
   int? _cod;
 
-  WeatherData(
+  TodayWeatherData(
       {Coord? coord,
       List<Weather>? weather,
       String? base,
@@ -95,7 +95,7 @@ class WeatherData {
   int? get cod => _cod;
   set cod(int? cod) => _cod = cod;
 
-  WeatherData.fromJson(Map<String, dynamic> json) {
+  TodayWeatherData.fromJson(Map<String, dynamic> json) {
     _coord = json['coord'] != null ? new Coord.fromJson(json['coord']) : null;
     if (json['weather'] != null) {
       _weather = <Weather>[];

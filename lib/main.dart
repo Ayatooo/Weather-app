@@ -1,7 +1,7 @@
 import 'package:app/widgets/widget.dart';
 import 'package:flutter/material.dart';
-// import 'package:intl/intl.dart';
 import './models/weather.dart';
+import 'models/todayWeather.dart';
 import 'api/api.dart';
 
 void main() {
@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Weather App',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -33,8 +33,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  // String day = DateFormat('EEEE').format(DateTime.now().add(Duration(days: 1)));
-  // String date = DateFormat('d MMM yyyy').format(DateTime.now().add(Duration(days: 1)));
   
   @override
   Widget build(BuildContext context) {
@@ -42,8 +40,8 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Container(
         decoration: background(),
         child: Center(
-          child: FutureBuilder<WeatherData>(
-            future: fetchWeatherData('Paris'),
+          child: FutureBuilder<TodayWeatherData>(
+            future: fetchWeatherToday('Paris'),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return Column(
