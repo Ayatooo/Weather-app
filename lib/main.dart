@@ -1,7 +1,12 @@
+import 'dart:convert';
+import 'package:flutter/material.dart';
+import './models/weather.dart';
+import 'api/api.dart';
 import 'package:app/utils/setBackground.dart';
 import 'package:flutter/material.dart';
 import 'package:weather_icons/weather_icons.dart';
 import 'utils/setBackground.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -30,6 +35,25 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  
+  @override
+  Widget build(BuildContext context) {
+    //return the api response
+   //return Scaffold(
+     // appBar: AppBar(
+    //    title: Text(widget.title),
+    //  ),
+    //  body: Center(
+    //    child: FutureBuilder<WeatherData>(
+      //    future: fetchWeatherData('London'),
+       //   builder: (context, snapshot) {
+        //    if (snapshot.hasData) {
+         //     return Text(snapshot.data!.clouds!.all.toString());
+         //   } else if (snapshot.hasError) {
+          //    return Text("${snapshot.error}");
+          //  }
+          //  return CircularProgressIndicator();
+        //  },
 
   @override
   Widget build(BuildContext context) {
