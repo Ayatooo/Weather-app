@@ -49,7 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
           child:  Column(
               //on commence au debut de la page et au milieu
               children : [
-              Padding(
+              const Padding(
                 padding: EdgeInsets.only(top:40, bottom: 20),
                 child : Text( "Paris", style: TextStyle(fontSize: 30, color: Colors.white),),
               ),
@@ -57,6 +57,10 @@ class _MyHomePageState extends State<MyHomePage> {
               //texte au dessus de la boite d'affichage
               //boite d'affichage
               Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Colors.blueAccent,
+              ),
               child : SizedBox(
                 width: 300,
                 height: 150,
@@ -70,15 +74,15 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Text(
+                        const Text(
                           "Monday",
                           style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
                         ),
-                        Text(
+                        const Text(
                           "Feb 2 2022",
                           style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
                         ),
-                        Text(
+                        const Text(
                           "19:22",
                           style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
                         ),
@@ -94,8 +98,8 @@ class _MyHomePageState extends State<MyHomePage> {
                             ),
                           child : Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Padding(
+                          children: <Widget>[
+                            const Padding(
                               padding: EdgeInsets.only(bottom : 10),
                               child : Icon(
                                 WeatherIcons.cloud,
@@ -103,8 +107,8 @@ class _MyHomePageState extends State<MyHomePage> {
                               color: Colors.white,
                               ),
                             ),
-                            Padding(padding: EdgeInsets.only(left : 5),
-                            child : Text(
+                            const Padding(padding: EdgeInsets.only(left : 5),
+                            child : const Text(
                           "Clear",
                           style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.white),
                         ),
@@ -117,10 +121,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ),
                 ),
-              ),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: Colors.blueAccent,
               ),
               ),
               ]
