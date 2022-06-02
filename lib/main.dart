@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_literals_to_create_immutables, unnecessary_const
+
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import './models/weather.dart';
@@ -35,30 +37,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  
-  @override
-  Widget build(BuildContext context) {
-    //return the api response
-   //return Scaffold(
-     // appBar: AppBar(
-    //    title: Text(widget.title),
-    //  ),
-    //  body: Center(
-    //    child: FutureBuilder<WeatherData>(
-      //    future: fetchWeatherData('London'),
-       //   builder: (context, snapshot) {
-        //    if (snapshot.hasData) {
-         //     return Text(snapshot.data!.clouds!.all.toString());
-         //   } else if (snapshot.hasError) {
-          //    return Text("${snapshot.error}");
-          //  }
-          //  return CircularProgressIndicator();
-        //  },
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-  
       body: Container(
         // Le background est défini dans le fichier setBackground.dart
         decoration: BoxDecoration(
@@ -68,61 +49,76 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
 
-        // Le contenu de la page
-        child : Center(
-          child:  Column(
-              //on commence au debut de la page et au milieu
-              children : [
-              Padding(
-                padding: EdgeInsets.only(top:40, bottom: 20),
-                child : Text( "Paris", style: TextStyle(fontSize: 30, color: Colors.white),),
-              ),
-
-              //texte au dessus de la boite d'affichage
-              //boite d'affichage
-              Container(
-              child : SizedBox(
-                width: 300,
-                height: 150,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.cyan,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 10, top: 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        //temperature
-                        Text(
-                          "20°C",
-                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                        ),
-                        //icone
-                        const Icon(
-                          WeatherIcons.cloud,
-                          size: 20,
-                          color: Colors.white,
-                        ),
-                        //description
-                        Text(
-                          "Clear",
-                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                        ),
-                      ],
+        child: Center(
+          child: FutureBuilder<WeatherData>(
+            future: fetchWeatherData('Paris'),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Column(
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.only(top: 40, bottom: 20),
+                      child: Text(
+                        "Paris",
+                        style: TextStyle(fontSize: 30, color: Colors.white),
+                      ),
                     ),
-                  ),
-                ),
-              ),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: Colors.blueAccent,
-              ),
-              ),
-              ]
-            )
-          ],)
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.blueAccent,
+                      ),
+                      child: SizedBox(
+                        width: 300,
+                        height: 150,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.cyan,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 10, top: 10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                //temperature
+                                Text(
+                                  "${snapshot.data!.main!.temp}°C",
+                                  style: const TextStyle(
+                                    fontSize: 40,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                //icone
+                                const Icon(
+                                  WeatherIcons.cloud,
+                                  size: 20,
+                                  color: Colors.white,
+                                ),
+                                //description
+                                const Text(
+                                  "Clear",
+                                  style: const TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              } else if (snapshot.hasError) {
+                return Text("${snapshot.error}");
+              } else if (snapshot.hasError) {
+                return Text("${snapshot.error}");
+              }
+              return const CircularProgressIndicator();
+            },
+          ),
+        ),
       ),
     );
   }
