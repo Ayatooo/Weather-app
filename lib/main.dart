@@ -1,115 +1,201 @@
 import 'package:flutter/material.dart';
+import 'package:weather/weather.dart';
 
-void main() {
-  runApp(const MyApp());
+enum AppState { NOT_DOWNLOADED, DOWNLOADING, FINISHED_DOWNLOADING }
+
+void main() => runApp(WeatherApp());
+
+class WeatherApp extends StatefulWidget {
+  const WeatherApp({Key? key}) : super(key: key);
+
+  @override
+  _WeatherAppState createState() => _WeatherAppState();
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class _WeatherAppState extends State<WeatherApp> {
+  String key = '856822fd8e22db5e1ba48c0e7d69844a';
+  late WeatherFactory ws;
+  List<Weather> _data = [];
+  AppState _state = AppState.NOT_DOWNLOADED;
+  double? lat, lon;
 
-  // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
+  void initState() {
+    super.initState();
+    ws = new WeatherFactory(key);
   }
-}
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
+  void queryForecast() async {
+    /// Removes keyboard
+    FocusScope.of(context).requestFocus(FocusNode());
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
+      _state = AppState.DOWNLOADING;
+    });
+
+    List<Weather> forecasts = await ws.fiveDayForecastByLocation(lat!, lon!);
+    setState(() {
+      _data = forecasts;
+      _state = AppState.FINISHED_DOWNLOADING;
     });
   }
 
+  void queryWeather() async {
+    /// Removes keyboard
+    FocusScope.of(context).requestFocus(FocusNode());
+
+    setState(() {
+      _state = AppState.DOWNLOADING;
+    });
+
+    Weather weather = await ws.currentWeatherByLocation(lat!, lon!);
+    setState(() {
+      _data = [weather];
+      _state = AppState.FINISHED_DOWNLOADING;
+    });
+  }
+
+  Widget contentFinishedDownload() {
+    return Center(
+      child: ListView.separated(
+        itemCount: _data.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(_data[index].toString()),
+          );
+        },
+        separatorBuilder: (context, index) {
+          return Divider();
+        },
+      ),
+    );
+  }
+
+  Widget contentDownloading() {
+    return Container(
+      margin: EdgeInsets.all(25),
+      child: Column(children: [
+        Text(
+          'Fetching Weather...',
+          style: TextStyle(fontSize: 20),
+        ),
+        Container(
+            margin: EdgeInsets.only(top: 50),
+            child: Center(child: CircularProgressIndicator(strokeWidth: 10)))
+      ]),
+    );
+  }
+
+  Widget contentNotDownloaded() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            'Press the button to download the Weather forecast',
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _resultView() => _state == AppState.FINISHED_DOWNLOADING
+      ? contentFinishedDownload()
+      : _state == AppState.DOWNLOADING
+          ? contentDownloading()
+          : contentNotDownloaded();
+
+  void _saveLat(String input) {
+    lat = double.tryParse(input);
+    print(lat);
+  }
+
+  void _saveLon(String input) {
+    lon = double.tryParse(input);
+    print(lon);
+  }
+
+  Widget _coordinateInputs() {
+    return Row(
+      children: <Widget>[
+        Expanded(
+          child: Container(
+              margin: EdgeInsets.all(5),
+              child: TextField(
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(), hintText: 'Enter latitude'),
+                  keyboardType: TextInputType.number,
+                  onChanged: _saveLat,
+                  onSubmitted: _saveLat)),
+        ),
+        Expanded(
+            child: Container(
+                margin: EdgeInsets.all(5),
+                child: TextField(
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: 'Enter longitude'),
+                    keyboardType: TextInputType.number,
+                    onChanged: _saveLon,
+                    onSubmitted: _saveLon)))
+      ],
+    );
+  }
+
+  Widget _buttons() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Container(
+          margin: EdgeInsets.all(5),
+          child: TextButton(
+            child: Text(
+              'Fetch weather',
+              style: TextStyle(color: Colors.white),
+            ),
+            onPressed: queryWeather,
+            style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.blue)),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.all(5),
+          child: TextButton(
+            child: Text(
+              'Fetch forecast',
+              style: TextStyle(color: Colors.white),
+            ),
+            onPressed: queryForecast,
+            style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.blue)),
+          ),
+        )
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Weather Example App'),
+        ),
+        body: Column(
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
+            _coordinateInputs(),
+            _buttons(),
             Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
+              'Output:',
+              style: TextStyle(fontSize: 20),
             ),
+            Divider(
+              height: 20.0,
+              thickness: 2.0,
+            ),
+            Expanded(child: _resultView())
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
