@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: const MyHomePage(title: 'Weather app'),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
@@ -43,7 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
               if (snapshot.hasData) {
                 return Column(
                   children: [
-                    city(cityName: snapshot.data!.name.toString()),
+                    city(snapshot.data),
                     todayWeatherBoard(snapshot.data),
                   ],
                 );
