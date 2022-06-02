@@ -1,48 +1,35 @@
-String setbackground (String currentWeather){
+// ignore: file_names
+String setbackground(String currentWeather) {
   String background = "";
-  if (currentWeather == "Clear"){
+  if (currentWeather == "Clear") {
     background = "lib/assets/soleil.jpeg";
-  }
-  else if (currentWeather == "Clouds"){
+  } else if (currentWeather == "Clouds") {
     background = "lib/assets/nuageux.jpg";
-  }
-  else if (currentWeather == "Rain"){
+  } else if (currentWeather == "Rain") {
     background = "lib/assets/pluie.jpg";
-  }
-  else if (currentWeather == "Snow"){
+  } else if (currentWeather == "Snow") {
     background = "lib/assets/neige.jpg";
-  }
-  else if (currentWeather == "Thunderstorm"){
+  } else if (currentWeather == "Thunderstorm") {
     background = "lib/assets/orage.jpg";
-  }
-  else if (currentWeather == "Mist"){
+  } else if (currentWeather == "Mist") {
     background = "lib/assets/brouillard.jpg";
-  }
-  else if (currentWeather == "Fog"){
+  } else if (currentWeather == "Fog") {
     background = "lib/assets/brouillard.jpg";
-  }
-  else if (currentWeather == "Drizzle"){
+  } else if (currentWeather == "Drizzle") {
     background = "lib/assets/pluie.jpg";
-  }
-  else if (currentWeather == "Haze"){
+  } else if (currentWeather == "Haze") {
     background = "lib/assets/brouillard.jpg";
-  }
-  else if (currentWeather == "Dust"){
+  } else if (currentWeather == "Dust") {
     background = "lib/assets/brouillard.jpg";
-  }
-  else if (currentWeather == "Ash"){
+  } else if (currentWeather == "Ash") {
     background = "lib/assets/brouillard.jpg";
-  }
-  else if (currentWeather == "Squall"){
+  } else if (currentWeather == "Squall") {
     background = "lib/assets/orage.jpg";
-  }
-  else if (currentWeather == "Tornado"){
+  } else if (currentWeather == "Tornado") {
     background = "lib/assets/orage.jpg";
-  }
-  else if (currentWeather == "Clear sky"){
+  } else if (currentWeather == "Clear sky") {
     background = "lib/assets/nuageux.jpg";
-  }
-  else if (currentWeather == "Few clouds"){
+  } else if (currentWeather == "Few clouds") {
     background = "lib/assets/nuageux.jpg";
   }
   return background;

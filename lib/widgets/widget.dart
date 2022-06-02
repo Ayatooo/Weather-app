@@ -1,93 +1,104 @@
-// // ignore_for_file: no_leading_underscores_for_local_identifiers, unused_element
+import 'package:flutter/material.dart';
+import 'package:weather_icons/weather_icons.dart';
+import '../models/weather.dart';
+import '../utils/setBackground.dart';
+import 'package:intl/intl.dart';
 
-// import 'package:flutter/material.dart';
+BoxDecoration background() {
+  return BoxDecoration(
+    image: DecorationImage(
+      image: AssetImage(setbackground("Clear")),
+      fit: BoxFit.cover,
+    ),
+  );
+}
 
-// import '../main.dart';
+Padding city(WeatherData? data) {
+  return Padding(
+    padding: const EdgeInsets.only(top: 60, bottom: 20),
+    child: Text(
+      "${data!.name}",
+      style: const TextStyle(
+        fontSize: 50,
+        color: Color.fromARGB(255, 255, 255, 255),
+        fontFamily: 'Courrier',
+      ),
+    ),
+  );
+}
 
-// Widget contentFinishedDownload(_data) {
-//   return Center(
-//     child: ListView.separated(
-//       itemCount: _data.length,
-//       itemBuilder: (context, index) {
-//         return ListTile(
-//           title: Text(_data[index].toString()),
-//         );
-//       },
-//       separatorBuilder: (context, index) {
-//         return const Divider();
-//       },
-//     ),
-//   );
-// }
-
-// Widget contentDownloading() {
-//   return Container(
-//     margin: const EdgeInsets.all(25),
-//     child: Column(children: [
-//       const Text(
-//         'Fetching Weather...',
-//         style: TextStyle(fontSize: 20),
-//       ),
-//       Container(
-//           margin: const EdgeInsets.only(top: 50),
-//           child:
-//               const Center(child: CircularProgressIndicator(strokeWidth: 10)))
-//     ]),
-//   );
-// }
-
-// Widget contentNotDownloaded() {
-//   return Center(
-//     child: Column(
-//       mainAxisAlignment: MainAxisAlignment.center,
-//       children: const <Widget>[
-//         Text(
-//           'Press the button to download the Weather forecast',
-//         ),
-//       ],
-//     ),
-//   );
-// }
-
-// Widget _resultView(_state, _data) => _state == AppState.FINISHED_DOWNLOADING
-//     ? contentFinishedDownload(_data)
-//     : _state == AppState.DOWNLOADING
-//         ? contentDownloading()
-//         : contentNotDownloaded();
-
-// void _saveLat(String input, lat) {
-//   lat = double.tryParse(input);
-//   print(lat);
-// }
-
-// void _saveLon(String input, lon) {
-//   lon = double.tryParse(input);
-//   print(lon);
-// }
-
-// Widget _coordinateInputs(_saveLat, _saveLon) {
-//   return Row(
-//     children: <Widget>[
-//       Expanded(
-//         child: Container(
-//             margin: const EdgeInsets.all(5),
-//             child: TextField(
-//                 decoration: const InputDecoration(
-//                     border: OutlineInputBorder(), hintText: 'Enter latitude'),
-//                 keyboardType: TextInputType.number,
-//                 onChanged: _saveLat,
-//                 onSubmitted: _saveLat)),
-//       ),
-//       Expanded(
-//           child: Container(
-//               margin: const EdgeInsets.all(5),
-//               child: TextField(
-//                   decoration: const InputDecoration(
-//                       border: OutlineInputBorder(),
-//                       hintText: 'Enter longitude'),
-//                   keyboardType: TextInputType.number,
-//                   onChanged: _saveLon,
-//                   onSubmitted: _saveLon)))
-//     ],
-//   );
-// }
+SizedBox todayWeatherBoard(WeatherData? data) {
+  return SizedBox(
+    width: 300,
+    height: 150,
+    child: Container(
+      decoration: BoxDecoration(
+        color: const Color.fromRGBO(38, 38, 38, 0.4),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Padding(
+          padding: const EdgeInsets.only(left: 10, top: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              const Text(
+                "day",
+                style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
+              ),
+              const Text(
+                "Feb 2 2022",
+                style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
+              ),
+              const Text(
+                "19:22",
+                style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
+              ),
+              SizedBox(
+                width: 120,
+                height: 60,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 15, left: 10),
+                  child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.white, width: 2),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Padding(
+                            padding: EdgeInsets.only(bottom: 10),
+                            child: Icon(
+                              WeatherIcons.cloud,
+                              size: 20,
+                              color: Colors.white,
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(left: 5),
+                            child: Text(
+                              "Clear",
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                            ),
+                          ),
+                        ],
+                      )),
+                ),
+              ),
+            ],
+          )),
+    ),
+  );
+}
