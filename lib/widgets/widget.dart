@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:weather_icons/weather_icons.dart';
 import '../models/weather.dart';
 import '../utils/setBackground.dart';
-import 'package:intl/intl.dart';
 
 BoxDecoration background() {
   return BoxDecoration(
