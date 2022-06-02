@@ -1,6 +1,11 @@
+import 'dart:ffi';
+
+import 'package:app/api/api.dart';
+import 'package:app/models/weekWeather.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:weather_icons/weather_icons.dart';
-import '../models/weather.dart';
+import '../models/todayWeather.dart';
 import '../utils/setBackground.dart';
 
 BoxDecoration background() {
@@ -12,7 +17,7 @@ BoxDecoration background() {
   );
 }
 
-Padding city(WeatherData? data) {
+Padding city(TodayWeatherData? data) {
   return Padding(
     padding: const EdgeInsets.only(top: 60, bottom: 20),
     child: Text(
@@ -26,7 +31,11 @@ Padding city(WeatherData? data) {
   );
 }
 
-SizedBox todayWeatherBoard(WeatherData? data) {
+SizedBox todayWeatherBoard(TodayWeatherData? data) {
+  String day = DateFormat('EEEE').format(DateTime.now());
+  String date = DateFormat('dd/MM/yyyy').format(DateTime.now());
+  String time = DateFormat('HH:mm').format(DateTime.now().toUtc());
+
   return SizedBox(
     width: 300,
     height: 150,
@@ -40,23 +49,23 @@ SizedBox todayWeatherBoard(WeatherData? data) {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              const Text(
-                "day",
-                style: TextStyle(
+              Text(
+                day,
+                style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                     color: Colors.white),
               ),
-              const Text(
-                "Feb 2 2022",
-                style: TextStyle(
+              Text(
+                date,
+                style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                     color: Colors.white),
               ),
-              const Text(
-                "19:22",
-                style: TextStyle(
+              Text(
+                time,
+                style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                     color: Colors.white),
@@ -99,5 +108,59 @@ SizedBox todayWeatherBoard(WeatherData? data) {
             ],
           )),
     ),
+  );
+}
+
+SizedBox nextDay(TodayWeatherData? data, int nextDay) {
+  String day =
+      DateFormat('EEEE').format(DateTime.now().add(Duration(days: nextDay)));
+  String date = DateFormat('d MMM yyyy')
+      .format(DateTime.now().add(Duration(days: nextDay)));
+
+  return SizedBox(
+    width: 300,
+    height: 150,
+    child: Container(
+      decoration: BoxDecoration(
+        color: const Color.fromRGBO(38, 38, 38, 0.4),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Padding(
+          padding: const EdgeInsets.only(left: 10, top: 10),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                day + ", " + date,
+                style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
+              ),
+              getNewData(data!.coord!.lat, data.coord!.lon, nextDay),
+            ],
+          )),
+    ),
+  );
+}
+
+getNewData(double? lat, double? lon, int nextDay) {
+  return FutureBuilder<WeekWeatherData>(
+    future: fetchWeatherWeek(lat!, lon!),
+    builder: (context, snapshot) {
+      if (snapshot.hasData) {
+        return Text(
+          snapshot.data!.daily![nextDay].temp!.day.toString(),
+          style: const TextStyle(
+            fontSize: 20,
+            color: Color.fromARGB(255, 255, 255, 255),
+            fontFamily: 'Courrier',
+          ),
+        );
+      } else if (snapshot.hasError) {
+        return Text("${snapshot.error}");
+      }
+      return const CircularProgressIndicator();
+    },
   );
 }
