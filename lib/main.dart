@@ -1,5 +1,6 @@
 import 'package:app/widgets/widget.dart';
 import 'package:flutter/material.dart';
+import './models/weather.dart';
 import 'models/todayWeather.dart';
 import 'api/api.dart';
 
@@ -32,6 +33,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,9 +48,12 @@ class _MyHomePageState extends State<MyHomePage> {
                   children: [
                     city(snapshot.data),
                     todayWeatherBoard(snapshot.data),
-                    nextDay(snapshot.data, 1),
-                    nextDay(snapshot.data, 2),
-                    nextDay(snapshot.data, 3),
+                    const Padding(padding: EdgeInsets.only(top: 70)),
+                    nextday(snapshot.data,1),
+                    nextday(snapshot.data,2),
+                    nextday(snapshot.data,3),
+                    nextday(snapshot.data,4),
+                    nextday(snapshot.data,5),
                   ],
                 );
               } else if (snapshot.hasError) {
