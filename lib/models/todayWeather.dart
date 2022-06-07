@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_getters_setters
+
 class TodayWeatherData {
   Coord? _coord;
   List<Weather>? _weather;
@@ -28,43 +30,43 @@ class TodayWeatherData {
       String? name,
       int? cod}) {
     if (coord != null) {
-      this._coord = coord;
+      _coord = coord;
     }
     if (weather != null) {
-      this._weather = weather;
+      _weather = weather;
     }
     if (base != null) {
-      this._base = base;
+      _base = base;
     }
     if (main != null) {
-      this._main = main;
+      _main = main;
     }
     if (visibility != null) {
-      this._visibility = visibility;
+      _visibility = visibility;
     }
     if (wind != null) {
-      this._wind = wind;
+      _wind = wind;
     }
     if (clouds != null) {
-      this._clouds = clouds;
+      _clouds = clouds;
     }
     if (dt != null) {
-      this._dt = dt;
+      _dt = dt;
     }
     if (sys != null) {
-      this._sys = sys;
+      _sys = sys;
     }
     if (timezone != null) {
-      this._timezone = timezone;
+      _timezone = timezone;
     }
     if (id != null) {
-      this._id = id;
+      _id = id;
     }
     if (name != null) {
-      this._name = name;
+      _name = name;
     }
     if (cod != null) {
-      this._cod = cod;
+      _cod = cod;
     }
   }
 
@@ -96,21 +98,20 @@ class TodayWeatherData {
   set cod(int? cod) => _cod = cod;
 
   TodayWeatherData.fromJson(Map<String, dynamic> json) {
-    _coord = json['coord'] != null ? new Coord.fromJson(json['coord']) : null;
+    _coord = json['coord'] != null ? Coord.fromJson(json['coord']) : null;
     if (json['weather'] != null) {
       _weather = <Weather>[];
       json['weather'].forEach((v) {
-        _weather!.add(new Weather.fromJson(v));
+        _weather!.add(Weather.fromJson(v));
       });
     }
     _base = json['base'];
-    _main = json['main'] != null ? new Main.fromJson(json['main']) : null;
+    _main = json['main'] != null ? Main.fromJson(json['main']) : null;
     _visibility = json['visibility'];
-    _wind = json['wind'] != null ? new Wind.fromJson(json['wind']) : null;
-    _clouds =
-        json['clouds'] != null ? new Clouds.fromJson(json['clouds']) : null;
+    _wind = json['wind'] != null ? Wind.fromJson(json['wind']) : null;
+    _clouds = json['clouds'] != null ? Clouds.fromJson(json['clouds']) : null;
     _dt = json['dt'];
-    _sys = json['sys'] != null ? new Sys.fromJson(json['sys']) : null;
+    _sys = json['sys'] != null ? Sys.fromJson(json['sys']) : null;
     _timezone = json['timezone'];
     _id = json['id'];
     _name = json['name'];
@@ -118,32 +119,32 @@ class TodayWeatherData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this._coord != null) {
-      data['coord'] = this._coord!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (_coord != null) {
+      data['coord'] = _coord!.toJson();
     }
-    if (this._weather != null) {
-      data['weather'] = this._weather!.map((v) => v.toJson()).toList();
+    if (_weather != null) {
+      data['weather'] = _weather!.map((v) => v.toJson()).toList();
     }
-    data['base'] = this._base;
-    if (this._main != null) {
-      data['main'] = this._main!.toJson();
+    data['base'] = _base;
+    if (_main != null) {
+      data['main'] = _main!.toJson();
     }
-    data['visibility'] = this._visibility;
-    if (this._wind != null) {
-      data['wind'] = this._wind!.toJson();
+    data['visibility'] = _visibility;
+    if (_wind != null) {
+      data['wind'] = _wind!.toJson();
     }
-    if (this._clouds != null) {
-      data['clouds'] = this._clouds!.toJson();
+    if (_clouds != null) {
+      data['clouds'] = _clouds!.toJson();
     }
-    data['dt'] = this._dt;
-    if (this._sys != null) {
-      data['sys'] = this._sys!.toJson();
+    data['dt'] = _dt;
+    if (_sys != null) {
+      data['sys'] = _sys!.toJson();
     }
-    data['timezone'] = this._timezone;
-    data['id'] = this._id;
-    data['name'] = this._name;
-    data['cod'] = this._cod;
+    data['timezone'] = _timezone;
+    data['id'] = _id;
+    data['name'] = _name;
+    data['cod'] = _cod;
     return data;
   }
 }
@@ -154,10 +155,10 @@ class Coord {
 
   Coord({double? lon, double? lat}) {
     if (lon != null) {
-      this._lon = lon;
+      _lon = lon;
     }
     if (lat != null) {
-      this._lat = lat;
+      _lat = lat;
     }
   }
 
@@ -172,9 +173,9 @@ class Coord {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['lon'] = this._lon;
-    data['lat'] = this._lat;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['lon'] = _lon;
+    data['lat'] = _lat;
     return data;
   }
 }
@@ -187,16 +188,16 @@ class Weather {
 
   Weather({int? id, String? main, String? description, String? icon}) {
     if (id != null) {
-      this._id = id;
+      _id = id;
     }
     if (main != null) {
-      this._main = main;
+      _main = main;
     }
     if (description != null) {
-      this._description = description;
+      _description = description;
     }
     if (icon != null) {
-      this._icon = icon;
+      _icon = icon;
     }
   }
 
@@ -217,11 +218,11 @@ class Weather {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this._id;
-    data['main'] = this._main;
-    data['description'] = this._description;
-    data['icon'] = this._icon;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = _id;
+    data['main'] = _main;
+    data['description'] = _description;
+    data['icon'] = _icon;
     return data;
   }
 }
@@ -242,22 +243,22 @@ class Main {
       int? pressure,
       int? humidity}) {
     if (temp != null) {
-      this._temp = temp;
+      _temp = temp;
     }
     if (feelsLike != null) {
-      this._feelsLike = feelsLike;
+      _feelsLike = feelsLike;
     }
     if (tempMin != null) {
-      this._tempMin = tempMin;
+      _tempMin = tempMin;
     }
     if (tempMax != null) {
-      this._tempMax = tempMax;
+      _tempMax = tempMax;
     }
     if (pressure != null) {
-      this._pressure = pressure;
+      _pressure = pressure;
     }
     if (humidity != null) {
-      this._humidity = humidity;
+      _humidity = humidity;
     }
   }
 
@@ -284,13 +285,13 @@ class Main {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['temp'] = this._temp;
-    data['feels_like'] = this._feelsLike;
-    data['temp_min'] = this._tempMin;
-    data['temp_max'] = this._tempMax;
-    data['pressure'] = this._pressure;
-    data['humidity'] = this._humidity;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['temp'] = _temp;
+    data['feels_like'] = _feelsLike;
+    data['temp_min'] = _tempMin;
+    data['temp_max'] = _tempMax;
+    data['pressure'] = _pressure;
+    data['humidity'] = _humidity;
     return data;
   }
 }
@@ -301,10 +302,10 @@ class Wind {
 
   Wind({double? speed, int? deg}) {
     if (speed != null) {
-      this._speed = speed;
+      _speed = speed;
     }
     if (deg != null) {
-      this._deg = deg;
+      _deg = deg;
     }
   }
 
@@ -319,9 +320,9 @@ class Wind {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['speed'] = this._speed;
-    data['deg'] = this._deg;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['speed'] = _speed;
+    data['deg'] = _deg;
     return data;
   }
 }
@@ -331,7 +332,7 @@ class Clouds {
 
   Clouds({int? all}) {
     if (all != null) {
-      this._all = all;
+      _all = all;
     }
   }
 
@@ -343,8 +344,8 @@ class Clouds {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['all'] = this._all;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['all'] = _all;
     return data;
   }
 }
@@ -358,19 +359,19 @@ class Sys {
 
   Sys({int? type, int? id, String? country, int? sunrise, int? sunset}) {
     if (type != null) {
-      this._type = type;
+      _type = type;
     }
     if (id != null) {
-      this._id = id;
+      _id = id;
     }
     if (country != null) {
-      this._country = country;
+      _country = country;
     }
     if (sunrise != null) {
-      this._sunrise = sunrise;
+      _sunrise = sunrise;
     }
     if (sunset != null) {
-      this._sunset = sunset;
+      _sunset = sunset;
     }
   }
 
@@ -394,12 +395,12 @@ class Sys {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['type'] = this._type;
-    data['id'] = this._id;
-    data['country'] = this._country;
-    data['sunrise'] = this._sunrise;
-    data['sunset'] = this._sunset;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['type'] = _type;
+    data['id'] = _id;
+    data['country'] = _country;
+    data['sunrise'] = _sunrise;
+    data['sunset'] = _sunset;
     return data;
   }
 }
