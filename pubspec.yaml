@@ -38,6 +38,7 @@ dependencies:
   weather_icons: ^3.0.0
   intl: ^0.17.0
   timezone: ^0.8.0
+  easy_sidemenu: ^0.3.0
 
 dev_dependencies:
   flutter_test:

@@ -12,11 +12,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Weather App',
+      title: 'Paris',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        // primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Weather app'),
+      home: const MyHomePage(title: 'Paris'),
       debugShowCheckedModeBanner: false,
     );
   }
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
 
-  final String title;
+   final String title;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -35,6 +35,14 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      drawer: NavDrawer(),
+      appBar: AppBar(
+        title : Text(widget.title, textAlign: TextAlign.center,),
+        centerTitle: true,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
       body: Container(
         decoration: background(),
         child: Center(
@@ -44,9 +52,9 @@ class _MyHomePageState extends State<MyHomePage> {
               if (snapshot.hasData) {
                 return Column(
                   children: [
-                    city(snapshot.data),
+                    const Padding(padding: EdgeInsets.only(top: 130)),
                     todayWeatherBoard(snapshot.data),
-                    const Padding(padding: EdgeInsets.only(top: 70)),
+                    const Padding(padding: EdgeInsets.only(top: 50)),
                     nextday(snapshot.data, 1),
                     nextday(snapshot.data, 2),
                     nextday(snapshot.data, 3),
