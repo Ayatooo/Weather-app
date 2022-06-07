@@ -165,14 +165,11 @@ Padding nextday(TodayWeatherData? data, int nextDay) {
                 ),
               ),
               const Spacer(),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 6),
-                child: Icon(getIcon(""), size: 20, color: getColor("")),
-              ),
+              setIcon(data!.coord!.lat, data.coord!.lon, nextDay),
               const Padding(
                 padding: EdgeInsets.only(left: 30),
               ),
-              getNewData(data!.coord!.lat, data.coord!.lon, nextDay),
+              getNewData(data.coord!.lat, data.coord!.lon, nextDay),
             ],
           )),
     ),
@@ -190,6 +187,26 @@ getNewData(double? lat, double? lon, int nextDay) {
             fontSize: 15,
             color: Color.fromARGB(255, 255, 255, 255),
             fontWeight: FontWeight.bold,
+          ),
+        );
+      } else if (snapshot.hasError) {
+        return Text("${snapshot.error}");
+      }
+      return const CircularProgressIndicator();
+    },
+  );
+}
+
+setIcon(double? lat, double? lon, int nextDay) {
+  return FutureBuilder<WeekWeatherData>(
+    future: fetchWeatherWeek(lat!, lon!),
+    builder: (context, snapshot) {
+      if (snapshot.hasData) {
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 6),
+          child: Icon(
+            getIcon(snapshot.data!.daily![nextDay].weather![0].main.toString()),
+            size: 20,
           ),
         );
       } else if (snapshot.hasError) {
