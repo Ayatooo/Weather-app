@@ -1,4 +1,7 @@
-import 'package:app/widgets/widget.dart';
+import 'package:app/widgets/background.dart';
+import 'package:app/widgets/city.dart';
+import 'package:app/widgets/nextDay.dart';
+import 'package:app/widgets/todayWeatherBoard.dart';
 import 'package:flutter/material.dart';
 import 'models/todayWeather.dart';
 import 'api/api.dart';
