@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:weather_icons/weather_icons.dart';
 
+List<String> cities = [];
+
 String setbackground(String currentWeather) {
   String background = "";
 
@@ -67,3 +69,4 @@ Color getColor(String weather) {
       return Colors.orange;
   }
 }
+

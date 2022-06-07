@@ -4,26 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../models/todayWeather.dart';
 import '../utils/utils.dart';
+import 'package:prompt_dialog/prompt_dialog.dart';
 
 BoxDecoration background() {
   return BoxDecoration(
     image: DecorationImage(
       image: AssetImage(setbackground("Clear")),
       fit: BoxFit.cover,
-    ),
-  );
-}
-
-Padding city(TodayWeatherData? data) {
-  return Padding(
-    padding: const EdgeInsets.only(top: 90, bottom: 20),
-    child: Text(
-      "${data!.name}",
-      style: const TextStyle(
-        fontSize: 50,
-        color: Color.fromARGB(255, 255, 255, 255),
-        fontFamily: 'Courrier',
-      ),
     ),
   );
 }
@@ -208,32 +195,46 @@ class NavDrawer extends StatelessWidget{
         padding: EdgeInsets.zero,
         children: <Widget>[
           DrawerHeader(
-            child: Text('Mes Villes', style: TextStyle(color: Colors.black, fontSize: 30),),
-            decoration: BoxDecoration(
-              color: Colors.blue,
-            ),
+            child : Center( 
+              child : Column(
+                children: [
+                  Text('Mes Villes', style: TextStyle(color: Colors.black, fontSize: 30, fontStyle: FontStyle.italic), textAlign: TextAlign.center,),
+                  const Padding(padding: EdgeInsets.all(10)),
+                  ElevatedButton(
+                    onPressed: () {
+                       (prompt(context)).then((value) {
+                        if (value != null) {
+                          cities.add(value);
+                        }
+                      });
+                    },
+                     child: Text('Ajouter une ville', style : TextStyle(color: Colors.black, fontSize: 20, fontStyle: FontStyle.italic),)
+                     ),
+                ],
+              )
+              )
           ),
-          ListTile(
-            leading: Icon(Icons.home),
-            title: Text('Home'),
-            onTap: () {
-              {Navigator.of(context).pop();}
+          ListView.builder(
+            shrinkWrap: true,
+            // padding: const EdgeInsets.all(),
+            itemCount: cities.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                title: Text(cities[index]),
+                onTap: () {
+                  Navigator.pop(context);
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (context) => MyHomePage(
+                  //       title: cities[index],
+                  //     ),
+                  //   ),
+                  // );
+                },
+              );
             },
-          ),
-          ListTile(
-            leading: Icon(Icons.settings),
-            title: Text('Settings'),
-            onTap: () {
-              {Navigator.of(context).pop();}
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.exit_to_app),
-            title: Text('Logout'),
-            onTap: () {
-              {Navigator.of(context).pop();}
-            },
-          ),
+          )
         ],
       ),
     );

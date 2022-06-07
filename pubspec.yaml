@@ -39,6 +39,7 @@ dependencies:
   intl: ^0.17.0
   timezone: ^0.8.0
   easy_sidemenu: ^0.3.0
+  prompt_dialog: ^1.0.9
 
 dev_dependencies:
   flutter_test:
