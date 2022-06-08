@@ -18,11 +18,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Weather App',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Weather app'),
+      home: const MyHomePage(title: 'Paris'),
       debugShowCheckedModeBanner: false,
     );
   }
@@ -52,7 +51,6 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     handler = DatabaseHandler();
-    addCity();
   }
 
   @override

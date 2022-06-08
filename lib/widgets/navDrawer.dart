@@ -4,6 +4,7 @@ import 'package:sqflite/sqflite.dart';
 
 import '../db/city.dart';
 import '../db/DatabaseHandler.dart';
+import '../main.dart';
 
 List<City> cities = [];
 
@@ -27,7 +28,7 @@ class NavDrawer extends StatelessWidget {
               child: Center(
                   child: Column(
             children: [
-              Text(
+              const Text(
                 'Mes Villes',
                 style: TextStyle(
                     color: Colors.black,
@@ -67,14 +68,6 @@ class NavDrawer extends StatelessWidget {
                 title: Text(cities[index].name),
                 onTap: () {
                   Navigator.pop(context);
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) => MyHomePage(
-                  //       title: cities[index],
-                  //     ),
-                  //   ),
-                  // );
                 },
               );
             },
