@@ -47,4 +47,10 @@ class DatabaseHandler {
     return await db.update('cities', city.toMap(),
         where: 'city = ?', whereArgs: [city.name]);
   }
+
+  //add one city to database
+  Future<int> addCity(City city) async {
+    final Database db = await initializeDB();
+    return await db.insert('cities', city.toMap());
+  }
 }

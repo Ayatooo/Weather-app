@@ -7,6 +7,7 @@ import 'db/DatabaseHandler.dart';
 import 'db/city.dart';
 import 'models/todayWeather.dart';
 import 'api/api.dart';
+import 'widgets/navDrawer.dart';
 
 void main() {
   runApp(const MyApp());
@@ -57,23 +58,43 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //print the first city from the database
-      body: FutureBuilder<List<City>>(
-        future: handler.getCities(),
-        builder: (BuildContext context, AsyncSnapshot<List<City>> snapshot) {
-          if (snapshot.hasData) {
-            return ListView.builder(
-              itemCount: snapshot.data!.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Text(snapshot.data![index].name);
-              },
-            );
-          } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        },
+      extendBodyBehindAppBar: true,
+      drawer: NavDrawer(),
+      appBar: AppBar(
+        title: Text(
+          widget.title,
+          textAlign: TextAlign.center,
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
+      body: Container(
+        decoration: background(),
+        child: Center(
+          child: FutureBuilder<TodayWeatherData>(
+            future: fetchWeatherToday(widget.title),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Column(
+                  children: [
+                    const Padding(padding: EdgeInsets.only(top: 130)),
+                    todayWeatherBoard(snapshot.data),
+                    const Padding(padding: EdgeInsets.only(top: 50)),
+                    nextday(snapshot.data, 1),
+                    nextday(snapshot.data, 2),
+                    nextday(snapshot.data, 3),
+                    nextday(snapshot.data, 4),
+                    nextday(snapshot.data, 5),
+                  ],
+                );
+              } else if (snapshot.hasError) {
+                return Text("${snapshot.error}");
+              }
+              return const CircularProgressIndicator();
+            },
+          ),
+        ),
       ),
     );
   }
