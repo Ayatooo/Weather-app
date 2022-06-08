@@ -16,15 +16,7 @@ class DatabaseHandler {
     );
   }
 
-  Future<int> insertCity(List<City> cities) async {
-    int result = 0;
-    final Database db = await initializeDB();
-    for (var city in cities) {
-      result = await db.insert('cities', city.toMap());
-    }
-    return result;
-  }
-
+  //get all the cities from the database
   Future<List<City>> getCities() async {
     final Database db = await initializeDB();
     final List<Map<String, dynamic>> maps = await db.query('cities');
@@ -52,5 +44,19 @@ class DatabaseHandler {
   Future<int> addCity(City city) async {
     final Database db = await initializeDB();
     return await db.insert('cities', city.toMap());
+  }
+
+  //delete all the cities from the database
+  Future<void> deleteAllCities() async {
+    final Database db = await initializeDB();
+    await db.delete('cities');
+  }
+
+  //get the id of the city name
+  Future<int> getCityId(String cityName) async {
+    final Database db = await initializeDB();
+    final List<Map<String, dynamic>> maps =
+        await db.query('cities', where: 'name = ?', whereArgs: [cityName]);
+    return maps[0]['id'];
   }
 }

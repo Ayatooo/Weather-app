@@ -18,11 +18,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Weather App',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Weather app'),
+      home: const MyHomePage(title: 'Paris'),
       debugShowCheckedModeBanner: false,
     );
   }
@@ -40,19 +39,16 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   late DatabaseHandler handler;
 
-  Future<int> addCity() async {
-    City firstCity = City(name: "Paris");
-    City secondCity = City(name: "London");
-    City th = City(name: "London");
-    List<City> listOfCities = [firstCity, secondCity, th];
-    return await handler.insertCity(listOfCities);
-  }
-
   @override
   void initState() {
     super.initState();
     handler = DatabaseHandler();
-    addCity();
+    handler.initializeDB();
+    handler.getCities().then((value) {
+      setState(() {
+        cities = value;
+      });
+    });
   }
 
   @override

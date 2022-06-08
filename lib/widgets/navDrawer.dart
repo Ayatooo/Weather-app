@@ -4,6 +4,7 @@ import 'package:sqflite/sqflite.dart';
 
 import '../db/city.dart';
 import '../db/DatabaseHandler.dart';
+import '../main.dart';
 
 List<City> cities = [];
 
@@ -17,6 +18,18 @@ Future<void> getCities() async {
 }
 
 class NavDrawer extends StatelessWidget {
+  late DatabaseHandler handler;
+
+  @override
+  void initState() {
+    handler = DatabaseHandler();
+    //open the database
+    handler.initializeDB();
+
+    //get the cities from the database
+    cities = handler.getCities() as List<City>;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -45,6 +58,12 @@ class NavDrawer extends StatelessWidget {
                         handler.addCity(City(name: value)).then((id) {
                           cities.add(City(name: value));
                         });
+
+                        // Update the list of cities
+                        getCities();
+
+                        // Update the list of cities in the app
+                        Navigator.pop(context);
                       }
                     });
                   },
@@ -64,18 +83,37 @@ class NavDrawer extends StatelessWidget {
             itemBuilder: (context, index) {
               return ListTile(
                 //title is the city name,
-                title: Text(cities[index].name),
+                title: Text(
+                  //print all the cities in the database
+                  cities[index].name,
+                ),
                 onTap: () {
                   Navigator.pop(context);
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) => MyHomePage(
-                  //       title: cities[index],
-                  //     ),
-                  //   ),
-                  // );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MyHomePage(
+                        title: cities[index].name,
+                      ),
+                    ),
+                  );
                 },
+                //create a button that will delete the city from the database
+                trailing: IconButton(
+                  icon: Icon(Icons.delete),
+                  onPressed: () {
+                    //get the id of the city clicked with the function getCityId
+                    int id = handler.getCityId(cities[index].name) as int;
+
+                    //delete the city from the database
+                    handler.deleteCity(id).then(
+                      (value) {
+                        //delete the city from the database
+                        handler.deleteCity(id);
+                      },
+                    );
+                  },
+                ),
               );
             },
           )
