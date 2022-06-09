@@ -98,20 +98,16 @@ class NavDrawer extends StatelessWidget {
                     ),
                   );
                 },
-                //create a button that will delete the city from the database
+                //create a button that will delete the city from the database with the city name
                 trailing: IconButton(
                   icon: Icon(Icons.delete),
                   onPressed: () {
-                    //get the id of the city clicked with the function getCityId
-                    int id = handler.getCityId(cities[index].name) as int;
-
                     //delete the city from the database
-                    handler.deleteCity(id).then(
-                      (value) {
-                        //delete the city from the database
-                        handler.deleteCity(id);
-                      },
-                    );
+                    DatabaseHandler handler = DatabaseHandler();
+                    handler.deleteCity(cities[index].name).then((value) {
+                      //update the list of cities
+                      getCities();
+                    });
                   },
                 ),
               );

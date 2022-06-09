@@ -25,12 +25,12 @@ class DatabaseHandler {
     });
   }
 
-  Future<void> deleteCity(int id) async {
+  Future<void> deleteCity(String name) async {
     final db = await initializeDB();
     await db.delete(
       'cities',
-      where: "id = ?",
-      whereArgs: [id],
+      where: "name = ?",
+      whereArgs: [name],
     );
   }
 
@@ -58,5 +58,11 @@ class DatabaseHandler {
     final List<Map<String, dynamic>> maps =
         await db.query('cities', where: 'name = ?', whereArgs: [cityName]);
     return maps[0]['id'];
+  }
+
+  //clear all the cities from the database
+  Future<void> clearDatabase() async {
+    final Database db = await initializeDB();
+    await db.rawDelete('DELETE FROM cities');
   }
 }
