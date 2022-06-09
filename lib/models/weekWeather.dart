@@ -163,9 +163,7 @@ class FeelsLike {
 
   FeelsLike({this.day, this.night, this.eve, this.morn});
 
-  FeelsLike.fromJson(Map<String, dynamic> json) {
-    day = json['day'];
-  }
+  FeelsLike.fromJson(Map<String, dynamic> json) {}
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();

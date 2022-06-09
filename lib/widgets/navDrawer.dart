@@ -33,6 +33,7 @@ class NavDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      backgroundColor: Color.fromARGB(133, 232, 230, 230),
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
@@ -40,10 +41,10 @@ class NavDrawer extends StatelessWidget {
               child: Center(
                   child: Column(
             children: [
-              Text(
+              const Text(
                 'Mes Villes',
                 style: TextStyle(
-                    color: Colors.black,
+                    color: Color.fromARGB(255, 255, 255, 255),
                     fontSize: 30,
                     fontStyle: FontStyle.italic),
                 textAlign: TextAlign.center,
@@ -59,18 +60,21 @@ class NavDrawer extends StatelessWidget {
                           cities.add(City(name: value));
                         });
 
-                        // Update the list of cities
                         getCities();
 
-                        // Update the list of cities in the app
-                        Navigator.pop(context);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => MyHomePage(
+                                      title: value,
+                                    )));
                       }
                     });
                   },
-                  child: Text(
+                  child: const Text(
                     'Ajouter une ville',
                     style: TextStyle(
-                        color: Colors.black,
+                        color: Color.fromARGB(255, 255, 255, 255),
                         fontSize: 20,
                         fontStyle: FontStyle.italic),
                   )),
@@ -87,6 +91,7 @@ class NavDrawer extends StatelessWidget {
                   //print all the cities in the database
                   cities[index].name,
                 ),
+                textColor: Colors.white,
                 onTap: () {
                   Navigator.pop(context);
                   Navigator.push(
@@ -100,7 +105,10 @@ class NavDrawer extends StatelessWidget {
                 },
                 //create a button that will delete the city from the database with the city name
                 trailing: IconButton(
-                  icon: Icon(Icons.delete),
+                  icon: Icon(
+                    Icons.delete,
+                    color: Colors.white,
+                  ),
                   onPressed: () {
                     //delete the city from the database
                     DatabaseHandler handler = DatabaseHandler();
@@ -108,6 +116,14 @@ class NavDrawer extends StatelessWidget {
                       //update the list of cities
                       getCities();
                     });
+
+                    //go to the home page with the first city in the database in title
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MyHomePage(
+                                  title: cities[0].name,
+                                )));
                   },
                 ),
               );
